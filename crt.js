@@ -115,5 +115,20 @@ angular.module('crtApp', [])
     $scope.primesProd = prob.primesProd;
     var solvedProblem = prob.solveProblem();
     $scope.solution = solvedProblem[0];
+    $scope.showSoln = false;
     $scope.answer = solvedProblem[1];
+    $scope.userAnswer = null;
+    $scope.feedback = null;
+    $scope.correctAnswer = null;
+
+    $scope.validateAnswer = function() {
+      $scope.userAnswer = parseInt($scope.userAnswer, 10);
+      $scope.correctAnswer = $scope.userAnswer === $scope.answer;
+      if ($scope.userAnswer && $scope.correctAnswer) {
+        $scope.feedback = 'Correct!';
+        $scope.showSoln = true;
+      } else {
+        $scope.feedback = 'Incorrect :(  Try again?';
+      }
+    };
   }]);

@@ -2,6 +2,14 @@
 <html ng-app="crtApp">
   <head>
     <title>CRT Problems</title>
+    <style>
+      .red {
+        color: red;
+      }
+      .green {
+        color: green;
+      }
+    </style>
   </head>
   <body>
   <h1>Chinese Remainder Theorem</h1>
@@ -11,6 +19,13 @@
     </span>
 
     <span id="question">What is \(x \pmod { {{primesProd}} }\)?</span>
+
+    <span ng-class="{red: !correctAnswer, green: correctAnswer}"> 
+      {{feedback}} 
+    </span>
+    <form ng-submit="validateAnswer()">
+      <input ng-model="userAnswer"></input>
+    </form>
 
     <button ng-click="showSoln = !showSoln">Show Solution</button>
     <span ng-show="showSoln">
