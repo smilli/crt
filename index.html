@@ -10,7 +10,12 @@
       $$x \equiv {{value}} \pmod{ {{prime}} }$$
     </span>
 
-    What is \(x \pmod { {{primesProd}} }\)?
+    <span id="question">What is \(x \pmod { {{primesProd}} }\)?</span>
+
+    <button ng-click="showSoln = !showSoln">Show Solution</button>
+    <span ng-show="showSoln">
+      $$ {{solution}} $$
+    </span>
   </div>
 
     <script type="text/javascript"
