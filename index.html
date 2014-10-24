@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="crtApp">
+  <head>
+    <title>CRT Problems</title>
+  </head>
+  <body>
+  <h1>Chinese Remainder Theorem</h1>
+  <div ng-controller="ProblemController">
+    <span ng-repeat="(prime, value) in equations">
+      $$x \equiv {{value}} \pmod{ {{prime}} }$$
+    </span>
+
+    What is \(x \pmod { {{primesProd}} }\)?
+  </div>
+
+    <script type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js">
+    </script>
+    <script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/javascript" src="crt.js"></script>
+  </body>
+</html>
