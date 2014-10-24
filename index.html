@@ -2,7 +2,15 @@
 <html ng-app="crtApp">
   <head>
     <title>CRT Problems</title>
+    <link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
     <style>
+      h1 {
+        text-align: center;
+      }
+      #problem {
+        text-align: center;
+      }
       .red {
         color: red;
       }
@@ -13,21 +21,27 @@
   </head>
   <body>
   <h1>Chinese Remainder Theorem</h1>
-  <div ng-controller="ProblemController">
+  <div id="problem" ng-controller="ProblemController">
     <span ng-repeat="(prime, value) in equations">
       $$x \equiv {{value}} \pmod{ {{prime}} }$$
     </span>
 
     <span id="question">What is \(x \pmod { {{primesProd}} }\)?</span>
 
-    <span ng-class="{red: !correctAnswer, green: correctAnswer}"> 
+    <br/><span ng-class="{red: !correctAnswer, green: correctAnswer}"> 
       {{feedback}} 
     </span>
     <form ng-submit="validateAnswer()">
       <input ng-model="userAnswer"></input>
     </form>
 
-    <button ng-click="showSoln = !showSoln">Show Solution</button>
+    </br>
+    <button type="button" class="btn btn-primary" ng-click="showSoln = !showSoln">
+      Show Solution
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="generateProblem()">
+      Generate New Problem
+    </button>
     <span ng-show="showSoln">
       $$ {{solution}} $$
     </span>

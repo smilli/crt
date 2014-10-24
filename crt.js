@@ -9,24 +9,37 @@ var Crt = function(numEquations) {
 }
 
 
-// Using these b/c assuming no student wants to do CRT on large primes
-Crt.prototype.PRIMES = [3, 5, 11, 13, 17, 19]
+// Using these b/c assuming no student wants to do CRT on large moduli.
+// Also I realize these are not primes.  Should be renamed to moduli.
+// I'm lazy.
+Crt.prototype.PRIMES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 
 Crt.prototype._generateProblem = function(numEquations) {
   var primesIndex, xEquivTo, prime;
   var usedPrimes = {}
+  var usedPrimesProd = 1;
   for (var i = 0; i < numEquations; i++) {
     primesIndex = Math.floor(Math.random() * this.PRIMES.length);
-    while (primesIndex in usedPrimes) {
+    while (primesIndex in usedPrimes ||
+        this._gcd(this.PRIMES[primesIndex], usedPrimesProd) !== 1) {
       primesIndex = Math.floor(Math.random() * this.PRIMES.length);
     }
     usedPrimes[primesIndex] = true;
     prime = this.PRIMES[primesIndex];
+    usedPrimesProd *= prime;
     this.primes.push(prime);
     xEquivTo = Math.floor(Math.random() * prime);
     this.equations[prime] = xEquivTo;
   }
+}
+
+
+Crt.prototype._gcd = function(a, b) {
+  if (b === 0) {
+    return a;
+  }
+  return this._gcd(b, a % b);
 }
 
 
@@ -110,6 +123,7 @@ Crt.prototype.solveProblem = function() {
 
 angular.module('crtApp', [])
   .controller('ProblemController', ['$scope', function($scope) {
+    /* Problem */
     var prob = new Crt(3);
     $scope.equations = prob.equations;
     $scope.primesProd = prob.primesProd;
@@ -117,6 +131,8 @@ angular.module('crtApp', [])
     $scope.solution = solvedProblem[0];
     $scope.showSoln = false;
     $scope.answer = solvedProblem[1];
+
+    /* Form */
     $scope.userAnswer = null;
     $scope.feedback = null;
     $scope.correctAnswer = null;
