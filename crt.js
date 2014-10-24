@@ -123,19 +123,29 @@ Crt.prototype.solveProblem = function() {
 
 angular.module('crtApp', [])
   .controller('ProblemController', ['$scope', function($scope) {
-    /* Problem */
-    var prob = new Crt(3);
-    $scope.equations = prob.equations;
-    $scope.primesProd = prob.primesProd;
-    var solvedProblem = prob.solveProblem();
-    $scope.solution = solvedProblem[0];
-    $scope.showSoln = false;
-    $scope.answer = solvedProblem[1];
-
-    /* Form */
-    $scope.userAnswer = null;
-    $scope.feedback = null;
-    $scope.correctAnswer = null;
+    $scope.generateProblem = function() {
+      var prob = new Crt(3);
+      $scope.equations = prob.equations;
+      $scope.primesProd = prob.primesProd;
+      var solvedProblem = prob.solveProblem();
+      $scope.solution = solvedProblem[0];
+      $scope.showSoln = false;
+      $scope.answer = solvedProblem[1];
+      setTimeout(function() {
+        var math = MathJax.Hub.getAllJax("problem")
+        var source;
+        for (var i = 0; i < math.length; i++) {
+          source = math[i].SourceElement()
+          source.parentNode.removeChild(source);
+          math[i].Remove();
+        }
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      }, 100);
+      $scope.userAnswer = null;
+      $scope.feedback = null;
+      $scope.correctAnswer = null;
+    }
+    $scope.generateProblem();
 
     $scope.validateAnswer = function() {
       $scope.userAnswer = parseInt($scope.userAnswer, 10);
